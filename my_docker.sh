@@ -68,8 +68,7 @@ if [ "$1" = "run" ]; then
 fi
 
 if [ $1 = "console" ]; then
-	containerName=$2
 	echo -e "${GREEN}>>> Entering console in container ${containerName} ...${NC}"
 	#/usr/bin/docker exec -ti ${containerName} /bin/bash 
-	/usr/bin/docker exec -it --user="${user}" dexrov-${space} /bin/bash -c ". /home/${user}/dexrov/devel/setup.bash && /bin/bash"
+	docker exec -it --user="${user}" ${containerName} /bin/bash
 fi
