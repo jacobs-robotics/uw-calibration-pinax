@@ -73,17 +73,12 @@ RUN cd opencv_contrib && git checkout 3.4
 # clone camodocal
 RUN git clone https://github.com/hengli/camodocal.git
 # copy script to install OpenCV in a virtual environment
-COPY make_opencv.sh /root
-RUN chmod a+x $HOME/make_opencv.sh 
+COPY make_opencv_camodocal.sh /root
+RUN chmod a+x $HOME/make_opencv_camodocal.sh 
 COPY setup_bashrc.sh /root
 RUN chmod a+x $HOME/setup_bashrc.sh
 RUN /bin/bash -c ". $HOME/setup_bashrc.sh"
-RUN /bin/bash -c ". $HOME/make_opencv.sh"
-
-# install camodocal
-RUN mkdir -p camodocal/build && cd camodocal/build && cmake -DCMAKE_BUILD_TYPE=Release ..
-RUN cd camodocal/build && make -j2
-RUN cd camodocal/build && make install
+RUN /bin/bash -c ". $HOME/make_opencv_camodocal.sh"
 
 # libdc1394 does not work in Docker, so disable it (we anyways don't need it in here)
 RUN ln /dev/null /dev/raw1394
