@@ -88,6 +88,7 @@ RUN mkdir -p $HOME/pinax/src
 RUN rm /etc/ros/rosdep/sources.list.d/20-default.list
 RUN rosdep init
 RUN /bin/bash -c ". /opt/ros/indigo/setup.bash; catkin_init_workspace $HOME/pinax/src"
+
 RUN /bin/bash -c ". /opt/ros/indigo/setup.bash; cd $HOME/pinax; catkin_make"
 RUN /bin/bash -c "echo source $HOME/pinax/devel/setup.bash >> $HOME/.bashrc"
 
@@ -97,4 +98,4 @@ RUN /bin/bash -c ". $HOME/pinax/devel/setup.bash && cd pinax && catkin_make"
 
 # provide startup command
 #CMD /bin/bash -c ". $HOME/pinax/devel/setup.bash && tail -f /dev/null"
-CMD /bin/bash -c ". $HOME/pinax/devel/setup.bash && ./run_pinax_dexrov.sh"
+#CMD /bin/bash -c ". $HOME/pinax/devel/setup.bash && ./run_pinax_dexrov.sh"
