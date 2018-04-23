@@ -70,16 +70,17 @@ RUN git clone https://github.com/opencv/opencv.git
 RUN git clone https://github.com/opencv/opencv_contrib.git
 RUN cd opencv && git checkout 3.4
 RUN cd opencv_contrib && git checkout 3.4
+# clone camodocal
+RUN git clone https://github.com/hengli/camodocal.git
 # copy script to install OpenCV in a virtual environment
 COPY make_opencv.sh /root
 RUN chmod a+x $HOME/make_opencv.sh 
 COPY setup_bashrc.sh /root
 RUN chmod a+x $HOME/setup_bashrc.sh
 RUN /bin/bash -c ". $HOME/setup_bashrc.sh"
-RUN /bin/bash -c "cd opencv && . $HOME/make_opencv.sh"
+RUN /bin/bash -c ". $HOME/make_opencv.sh"
 
 # install camodocal
-RUN git clone https://github.com/hengli/camodocal.git
 RUN mkdir -p camodocal/build && cd camodocal/build && cmake -DCMAKE_BUILD_TYPE=Release ..
 RUN cd camodocal/build && make -j2
 RUN cd camodocal/build && make install
