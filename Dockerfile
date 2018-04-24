@@ -89,5 +89,5 @@ COPY src /root/pinax/src
 RUN /bin/bash -c ". $HOME/pinax/devel/setup.bash && cd pinax && catkin_make"
 
 # provide startup command
-#CMD /bin/bash -c ". $HOME/pinax/devel/setup.bash && tail -f /dev/null"
-#CMD /bin/bash -c ". $HOME/pinax/devel/setup.bash && ./run_pinax_dexrov.sh"
+COPY src/run_pinax.sh /root/.
+CMD /bin/bash -c ". $HOME/pinax/devel/setup.bash && ./run_pinax.sh"
