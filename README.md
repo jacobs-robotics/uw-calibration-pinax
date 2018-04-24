@@ -53,6 +53,24 @@ im_height -- Rectified image height (can be scaled from the original dimensions)
 cx -- Center of the rectified image in X-axis
 cy -- Center of the rectified image in Y-axis
 ```
+* Run the container with the following command (UNIX):
+```
+./docker_helper.sh run
+```
+
+Or (Windows):
+```
+docker run --runtime=nvidia -it --name=uw-calibration-pinax --hostname=pinax \
+	    --net=default \
+	    --env="DISPLAY" \
+	    --env="QT_X11_NO_MITSHM=1" \
+	    --workdir="/root" \
+	    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+	    --volume=`pwd`/input_data:/root/input_data \
+	    --volume=`pwd`/output_data:/root/output_data \
+	    uw-calibration-pinax:1.0
+```
+* The outputs from CamOdoCal are saved to the *output_data/calibration_files* directory and the PinAx rectification maps to *output_data/pinax_maps*.
 
 ## References
 
