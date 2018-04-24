@@ -1,88 +1,69 @@
 # Underwater Camera Calibration (CamOdoCal+PinAx)
 
 Docker container with the [CamOdoCal](https://github.com/hengli/camodocal) camera calibration software and [PinAx](https://github.com/tomluc/Pinax-camera-model) model for underwater cameras with flat panels.
+The container automatically performs camera intrinsic+extrinsic calibration from images colleceted in-air, and also provides underwater rectification maps.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+In order to build and run the docker container, the following is needed:
 
-```
-Give examples
-```
+* [Docker](https://docs.docker.com/install/) >= 1.12  
+* [nvidia-docker2](https://github.com/NVIDIA/nvidia-docker) (Note that you need NVDIA drivers)
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+After cloning the repository, you only need to run the next command (UNIX systems):
 
 ```
-Give the example
+./docker_helper.sh build
 ```
 
-And repeat
+If you are using a Windows plaform, run the following command:
 
 ```
-until finished
+docker build uw-calibration-pinax:1.0 .
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
+* After the container is built; the images to be used for calibration have to placed under the *input_data/raw_imgs/* folder.
+* The parameters in *input_data/calibration_params.txt* have to be changed according to the calibration pattern used (checkerboard)
+and the design of the underwater housing used (thickness of the glass, camera position behing the glass, etc). Please check the 
+[CamOdoCal](https://github.com/hengli/camodocal) and [PinAx](https://github.com/tomluc/Pinax-camera-model) links for more information, a brief summary is given below:
 
 ```
-Give an example
+*CamOdoCal parameters*
+x_corners -- Checkerboard/calibration pattern number of inner corners along the X axis
+y_corners -- Checkerboard/calibration pattern number of inner corners along the Y axis
+square_size -- Checkerboard/calibration pattern square size in *mm*
+camera_model -- Camera model used to compute intrinsic and extrinsic paramaters (pinhole,kannala-brandt,mei)
+
+*pinax params*
+d_cam2panel -- Distance from the glass panel to the camera in *mm*
+d_virtualcam -- Distance from the glass panel to the virtual camera used by PinAx *mm*
+glass_thickness -- The glass thickness of the underwater camera housing
+n_glass -- Refraction index of the glass
+n_water -- Refraction index of the water
+focal_length -- Focal length
+im_width -- Rectified image width (can be scaled from the original dimensions)
+im_height -- Rectified image height (can be scaled from the original dimensions)
+cx -- Center of the rectified image in X-axis
+cy -- Center of the rectified image in Y-axis
 ```
 
-## Deployment
+## References
 
-Add additional notes about how to deploy this on a live system
+In case of using this software for research activities, please cite the following papers:
 
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+```
+- Lionel Heng, Paul Furgale, and Marc Pollefeys,
+	Leveraging Image-based Localization for Infrastructure-based Calibration of a Multi-camera Rig,
+    Journal of Field Robotics (JFR), 2015.
+- Tomasz Łuczyński, Max Pfingsthorn, Andreas Birk,
+	The Pinax-model for accurate and efficient refraction correction of underwater cameras in flat-pane housings,
+	Ocean Engineering, Volume 133,2017.
+```
 
