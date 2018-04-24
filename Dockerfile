@@ -1,11 +1,11 @@
-FROM nvidia/cuda:8.0-cudnn5-devel-ubuntu14.04
+FROM nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04
 
 MAINTAINER Arturo Gomez Chavez "a.gomezchavez@jacobs-university.de"
 
 # setup environment
-RUN locale-gen en_US.UTF-8
+RUN apt-get clean && apt-get update && apt-get install -y locales && locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
-ENV ROS_DISTRO indigo
+ENV ROS_DISTRO kinetic
 
 # create user folders
 RUN mkdir -p $HOME/input_data
@@ -22,34 +22,29 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-
     && rm -rf /var/lib/apt/lists/*
 
 # install ROS
-RUN /bin/bash -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+RUN /bin/bash -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y \
-	ros-indigo-desktop \
+	ros-kinetic-desktop \
 	&& rm -rf /var/lib/apt/lists/*
 RUN rosdep init && rosdep update
 
 # install some Pinax ROS dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    ros-indigo-cv-bridge \
-    ros-indigo-image-geometry \
-    ros-indigo-image-transport \
-    ros-indigo-gsll \
+    ros-kinetic-cv-bridge \
+    ros-kinetic-image-geometry \
+    ros-kinetic-image-transport \
+	libgsl-dev \
     && rm -rf /var/lib/apt/lists/*
-
-# install ceres library for camodocal
-RUN apt-get update
-RUN wget http://ceres-solver.org/ceres-solver-1.14.0.tar.gz
-RUN tar zxf ceres-solver-1.14.0.tar.gz
 
 # install necessary packages for OpenCV/Ceres/CamoDocal
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-install-recommends \
-	libtiff4-dev \
+	libtiff5-dev \
 	libv4l-dev \
 	libatlas-base-dev \
 	gfortran \
 	git \
-	cmake3 \
+	cmake \
     libblas-dev \
 	libgoogle-glog-dev \
 	libsuitesparse-dev \ 
@@ -87,14 +82,14 @@ RUN ln /dev/null /dev/raw1394
 RUN mkdir -p $HOME/pinax/src
 RUN rm /etc/ros/rosdep/sources.list.d/20-default.list
 RUN rosdep init
-RUN /bin/bash -c ". /opt/ros/indigo/setup.bash; catkin_init_workspace $HOME/pinax/src"
+RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; catkin_init_workspace $HOME/pinax/src"
 
-RUN /bin/bash -c ". /opt/ros/indigo/setup.bash; cd $HOME/pinax; catkin_make"
+RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; cd $HOME/pinax; catkin_make"
 RUN /bin/bash -c "echo source $HOME/pinax/devel/setup.bash >> $HOME/.bashrc"
 
 # copy and build PinAx code
 COPY src /root/pinax/src
-RUN /bin/bash -c ". $HOME/pinax/devel/setup.bash && cd pinax && catkin_make"
+#RUN /bin/bash -c ". $HOME/pinax/devel/setup.bash && cd pinax && catkin_make"
 
 # provide startup command
 #CMD /bin/bash -c ". $HOME/pinax/devel/setup.bash && tail -f /dev/null"

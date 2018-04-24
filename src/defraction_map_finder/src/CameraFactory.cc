@@ -16,6 +16,7 @@ and Systems (IROS), 2013.
 #include "defraction_map_finder/CameraFactory.h"
 
 #include <boost/algorithm/string.hpp>
+#include <iostream>
 
 //#include "ceres/ceres.h"
 #include "defraction_map_finder/CataCamera.h"
