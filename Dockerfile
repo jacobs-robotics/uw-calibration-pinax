@@ -42,6 +42,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-
 	libtiff5-dev \
 	libv4l-dev \
 	libatlas-base-dev \
+	libgtk2.0-dev \
 	gfortran \
 	git \
 	cmake \
@@ -50,7 +51,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-
 	libsuitesparse-dev \ 
     && rm -rf /var/lib/apt/lists/*
 RUN cd && wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py 
-RUN pip install virtualenv virtualenvwrapper
 
 # install ceres library for camodocal
 WORKDIR /root
@@ -67,12 +67,9 @@ RUN cd opencv && git checkout 3.4
 RUN cd opencv_contrib && git checkout 3.4
 # clone camodocal
 RUN git clone https://github.com/hengli/camodocal.git
-# copy script to install OpenCV in a virtual environment
+# copy script to install OpenCV and camodocal
 COPY make_opencv_camodocal.sh /root
 RUN chmod a+x $HOME/make_opencv_camodocal.sh 
-COPY setup_bashrc.sh /root
-RUN chmod a+x $HOME/setup_bashrc.sh
-RUN /bin/bash -c ". $HOME/setup_bashrc.sh"
 RUN /bin/bash -c ". $HOME/make_opencv_camodocal.sh"
 
 # libdc1394 does not work in Docker, so disable it (we anyways don't need it in here)
@@ -89,7 +86,7 @@ RUN /bin/bash -c "echo source $HOME/pinax/devel/setup.bash >> $HOME/.bashrc"
 
 # copy and build PinAx code
 COPY src /root/pinax/src
-#RUN /bin/bash -c ". $HOME/pinax/devel/setup.bash && cd pinax && catkin_make"
+RUN /bin/bash -c ". $HOME/pinax/devel/setup.bash && cd pinax && catkin_make"
 
 # provide startup command
 #CMD /bin/bash -c ". $HOME/pinax/devel/setup.bash && tail -f /dev/null"
