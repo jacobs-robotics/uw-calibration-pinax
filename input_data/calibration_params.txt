@@ -1,0 +1,19 @@
+#camodocal params
+x_corners 8
+y_corners 6
+square_size .06
+camera_model kannala-brandt
+
+#pinax params
+d_cam2panel 0.0028
+d_virtualcam 0.00165
+glass_thickness 0.02
+n_glass 1.7751
+n_water 1.34
+focal_length 580
+im_width 688
+im_height 516
+cx 344
+cy 258
+END
+
