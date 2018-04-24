@@ -29,9 +29,9 @@ docker build uw-calibration-pinax:1.0 .
 
 ## Running the tests
 
-* After the container is built; the images to be used for calibration have to placed under the *input_data/raw_imgs/* folder.
+* After the container is built; the images to be used for calibration have to be placed under the *input_data/raw_imgs/* folder.
 * The parameters in *input_data/calibration_params.txt* have to be changed according to the calibration pattern used (checkerboard)
-and the design of the underwater housing used (thickness of the glass, camera position behing the glass, etc). Please check the 
+and the design of the underwater housing (thickness of the glass, camera position behing the glass, etc). Please check the 
 [CamOdoCal](https://github.com/hengli/camodocal) and [PinAx](https://github.com/tomluc/Pinax-camera-model) links for more information, a brief summary is given below:
 
 ```
@@ -59,10 +59,10 @@ cy -- Center of the rectified image in Y-axis
 In case of using this software for research activities, please cite the following papers:
 
 ```
-- Lionel Heng, Paul Furgale, and Marc Pollefeys,
+	- Lionel Heng, Paul Furgale, and Marc Pollefeys,
 	Leveraging Image-based Localization for Infrastructure-based Calibration of a Multi-camera Rig,
     Journal of Field Robotics (JFR), 2015.
-- Tomasz Łuczyński, Max Pfingsthorn, Andreas Birk,
+	- Tomasz Łuczyński, Max Pfingsthorn, Andreas Birk,
 	The Pinax-model for accurate and efficient refraction correction of underwater cameras in flat-pane housings,
 	Ocean Engineering, Volume 133,2017.
 ```
