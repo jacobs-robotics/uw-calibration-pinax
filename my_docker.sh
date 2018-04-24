@@ -12,13 +12,12 @@ group=`id -g -n`
 groupid=`id -g`
 myhostname=pinax
 no_proc=`nproc`
-#space=dispnet
 
 if [ $1 = "help" ];then
 	echo -e "${GREEN}>>> Possible commands:\n ${NC}"
 	echo -e "${BLUE}build --- Build an image based on DockerFile in current dir\n"
 	echo -e "${BLUE}run --- Create and run container from image${NC}\n"
-	echo -e "${BLUE}console [Container Name] --- Gives terminal access (/bin/bash) access to a running container${NC}\n"
+	echo -e "${BLUE}console --- Gives terminal access (/bin/bash) access to a running container${NC}\n"
 fi
 
 if [ "$1" = "build" ]; then
@@ -50,25 +49,24 @@ if [ "$1" = "run" ]; then
 
 	docker run --runtime=nvidia -it \
 	    $DRI_ARGS \
-	    --user="${userid}" \
 	    --name="${containerName}" \
 	    --hostname="${myhostname}" \
 	    --net=default \
 	    --env="DISPLAY" \
 	    --env="QT_X11_NO_MITSHM=1" \
-	    --workdir="/home/${user}" \
+	    --workdir="/root" \
 	    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-	    --volume=`pwd`/input_data:/home/$user/input_data \
-	    --volume=`pwd`/output_data:/home/$user/output_data \
+	    --volume=`pwd`/input_data:/root/input_data \
+	    --volume=`pwd`/output_data:/root/output_data \
 	    ${user}/${containerName}:${containerTag}
 	    # error code 1 is harmless (meaning the container has been created already beforehand)
 	    rc=$?; if [[ $rc != 0 && $rc != 1 ]]; then exit $rc; fi
+		#--user="${userid}" \
 
 
 fi
 
 if [ $1 = "console" ]; then
 	echo -e "${GREEN}>>> Entering console in container ${containerName} ...${NC}"
-	#/usr/bin/docker exec -ti ${containerName} /bin/bash 
-	docker exec -it --user="${user}" ${containerName} /bin/bash
+	docker exec -it ${containerName} /bin/bash
 fi
