@@ -34,7 +34,6 @@ make -j$nproc || exit $?
 make install || exit $?
 
 echo -e "\n${GREEN}>>> Finish installation ${virtualEnvName} ${NC}"
-deactivate
 
 
 
