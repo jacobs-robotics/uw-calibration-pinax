@@ -59,11 +59,11 @@ cy -- Center of the rectified image in Y-axis
 In case of using this software for research activities, please cite the following papers:
 
 ```
-	- Lionel Heng, Paul Furgale, and Marc Pollefeys,
-	Leveraging Image-based Localization for Infrastructure-based Calibration of a Multi-camera Rig,
-    Journal of Field Robotics (JFR), 2015.
-	- Tomasz Łuczyński, Max Pfingsthorn, Andreas Birk,
-	The Pinax-model for accurate and efficient refraction correction of underwater cameras in flat-pane housings,
-	Ocean Engineering, Volume 133,2017.
+- Lionel Heng, Paul Furgale, and Marc Pollefeys,
+Leveraging Image-based Localization for Infrastructure-based Calibration of a Multi-camera Rig,
+Journal of Field Robotics (JFR), 2015.
+- Tomasz Łuczyński, Max Pfingsthorn, Andreas Birk,
+The Pinax-model for accurate and efficient refraction correction of underwater cameras in flat-pane housings,
+Ocean Engineering, Volume 133,2017.
 ```
 
