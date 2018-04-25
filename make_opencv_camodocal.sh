@@ -1,15 +1,8 @@
 #!/bin/bash
 GREEN='\033[1;32m'
 NC='\033[0m' # no color
-virtualEnvName=cv3
 nproc=2
 user=`id -u -n`
-
-#create virtual environment to ensure use of python 3 bindings (this can be done also for pyhton2)
-echo -e "\n${GREEN}>>> Creating OpenCV3 virtual environment${NC}"
-source /usr/local/bin/virtualenvwrapper.sh
-mkvirtualenv $virtualEnvName
-workon $virtualEnvName
 
 #create a build dir for OpenCV and build it
 echo -e "\n${GREEN}>>> Configuring CMake files for OpenCV${NC}"
@@ -27,13 +20,13 @@ ln -s /usr/local/cuda-8.0/targets/x86_64-linux/lib/libcudart.so /usr/lib/libopen
 
 echo -e "\n${GREEN}>>> Finish installing OpenCV in virtual enviroment ${virtualEnvName} ${NC}"
 
-echo -e "\n${GREEN}>>> Installing Camodocal ${virtualEnvName} ${NC}"
+echo -e "\n${GREEN}>>> Installing Camodocal ${NC}"
 cd $HOME/.
 mkdir -p $HOME/camodocal/build && cd $HOME/camodocal/build && cmake -DCMAKE_BUILD_TYPE=Release ..
 make -j$nproc || exit $?
 make install || exit $?
 
-echo -e "\n${GREEN}>>> Finish installation ${virtualEnvName} ${NC}"
+echo -e "\n${GREEN}>>> Finish installation ${NC}"
 
 
 
