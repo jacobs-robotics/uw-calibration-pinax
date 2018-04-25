@@ -36,12 +36,14 @@ and the design of the underwater housing (thickness of the glass, camera positio
 
 ```
 *CamOdoCal parameters*
+RUN -- true or false; enable or disable calibration using camodocal
 x_corners -- Checkerboard/calibration pattern number of inner corners along the X axis
 y_corners -- Checkerboard/calibration pattern number of inner corners along the Y axis
 square_size -- Checkerboard/calibration pattern square size in *mm*
 camera_model -- Camera model used to compute intrinsic and extrinsic paramaters (pinhole,kannala-brandt,mei)
 
 *pinax params*
+RUN -- true or false; enable or disable PinAx rectification
 d_cam2panel -- Distance from the glass panel to the camera in *mm*
 d_virtualcam -- Distance from the glass panel to the virtual camera used by PinAx *mm*
 glass_thickness -- The glass thickness of the underwater camera housing
@@ -53,6 +55,8 @@ im_height -- Rectified image height (can be scaled from the original dimensions)
 cx -- Center of the rectified image in X-axis
 cy -- Center of the rectified image in Y-axis
 ```
+** NOTE: ** Pleae do not modify the order of the variables or add/delete lines
+
 * Run the container with the following command (UNIX):
 ```
 ./docker_helper.sh run
