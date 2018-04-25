@@ -42,13 +42,13 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-
 	libtiff5-dev \
 	libv4l-dev \
 	libatlas-base-dev \
-	libgtk2.0-dev \
 	gfortran \
 	git \
 	cmake \
     libblas-dev \
 	libgoogle-glog-dev \
 	libsuitesparse-dev \ 
+	libgtk2.0-dev \
     && rm -rf /var/lib/apt/lists/*
 RUN cd && wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py 
 
@@ -73,7 +73,9 @@ RUN chmod a+x $HOME/make_opencv_camodocal.sh
 RUN /bin/bash -c ". $HOME/make_opencv_camodocal.sh"
 
 # libdc1394 does not work in Docker, so disable it (we anyways don't need it in here)
-RUN ln /dev/null /dev/raw1394
+RUN ln /dev/null /dev/raw1394 && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get remove -q -y libgtk2.0-dev
+#Manual fix to prevent GTK errors
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-install-recommends libgtk2.0-dev
     
 # create initial workspace
 RUN mkdir -p $HOME/pinax/src

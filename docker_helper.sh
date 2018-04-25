@@ -47,7 +47,7 @@ if [ "$1" = "run" ]; then
 		    DRI_ARGS="$DRI_ARGS --privileged"
 		fi
 
-	docker run --runtime=nvidia -it \
+	docker run --rm --runtime=nvidia -it \
 	    $DRI_ARGS \
 	    --name="${containerName}" \
 	    --hostname="${myhostname}" \
