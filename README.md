@@ -55,7 +55,7 @@ im_height -- Rectified image height (can be scaled from the original dimensions)
 cx -- Center of the rectified image in X-axis
 cy -- Center of the rectified image in Y-axis
 ```
-** NOTE: ** Pleae do not modify the order of the variables or add/delete lines
+**NOTE:** Pleae do not modify the order of the variables or add/delete lines
 
 * Run the container with the following command (UNIX):
 ```
@@ -64,7 +64,7 @@ cy -- Center of the rectified image in Y-axis
 
 Or (Windows):
 ```
-docker run --runtime=nvidia -it --name=uw-calibration-pinax --hostname=pinax \
+docker run --rm --runtime=nvidia -it --name=uw-calibration-pinax --hostname=pinax \
 	    --net=default \
 	    --env="DISPLAY" \
 	    --env="QT_X11_NO_MITSHM=1" \
