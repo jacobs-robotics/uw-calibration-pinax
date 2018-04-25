@@ -1,10 +1,12 @@
 #camodocal params
+RUN true
 x_corners 8
 y_corners 6
 square_size .06
 camera_model kannala-brandt
 
 #pinax params
+RUN false
 d_cam2panel 0.0028
 d_virtualcam 0.00165
 glass_thickness 0.02
