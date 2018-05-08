@@ -23,7 +23,7 @@ fi
 if [ "$1" = "build" ]; then
 	echo -e "${GREEN}>>> Building dexrov-${space} image ...${NC}"
 	#/usr/bin/docker build --build-arg user=$user --build-arg userid=$userid --build-arg group=$group --build-arg groupid=$groupid -t ${user}/${repoName}:${imageTag} .
-	docker build --build-arg user=$user --build-arg userid=$userid --build-arg group=$group --build-arg groupid=$groupid -t ${user}/${containerName}:${containerTag} .
+	docker build -t ${user}/${containerName}:${containerTag} .
 fi
 
 if [ "$1" = "run" ]; then

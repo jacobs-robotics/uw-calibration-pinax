@@ -81,14 +81,14 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-
 RUN mkdir -p $HOME/pinax/src
 RUN rm /etc/ros/rosdep/sources.list.d/20-default.list
 RUN rosdep init
-RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; catkin_init_workspace $HOME/pinax/src"
+RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; cd $HOME/pinax/src; catkin_init_workspace"
 
 RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; cd $HOME/pinax; catkin_make"
 RUN /bin/bash -c "echo source $HOME/pinax/devel/setup.bash >> $HOME/.bashrc"
 
 # copy and build PinAx code
 COPY src /root/pinax/src
-RUN /bin/bash -c ". $HOME/pinax/devel/setup.bash && cd pinax && catkin_make"
+RUN /bin/bash -c ". $HOME/pinax/devel/setup.bash; cd pinax; catkin_make"
 
 # provide startup command
 COPY src/run_pinax.sh /root/.
