@@ -122,7 +122,7 @@ include_directories(
 add_executable(stereo_defraction_map_finder src/stereo_defraction_map_finder.cpp src/MapFinder.cpp src/Camera.cc src/CameraFactory.cc src/CataCamera.cc src/EquidistantCamera.cc src/PinholeCamera.cc)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(defraction_map_finder_node defraction_map_finder_generate_messages_cpp)
+add_dependencies(stereo_defraction_map_finder ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(stereo_defraction_map_finder
