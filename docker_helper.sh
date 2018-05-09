@@ -13,15 +13,16 @@ groupid=`id -g`
 myhostname=pinax
 no_proc=`nproc`
 
-if [ $1 = "help" ];then
+if [ "$#" -eq "0" ]; then
 	echo -e "${GREEN}>>> Possible commands:\n ${NC}"
 	echo -e "${BLUE}build --- Build an image based on DockerFile in current dir\n"
 	echo -e "${BLUE}run --- Create and run container from image${NC}\n"
 	echo -e "${BLUE}console --- Gives terminal access (/bin/bash) access to a running container${NC}\n"
+    exit
 fi
 
 if [ "$1" = "build" ]; then
-	echo -e "${GREEN}>>> Building dexrov-${space} image ...${NC}"
+	echo -e "${GREEN}>>> Building Docker image ...${NC}"
 	#/usr/bin/docker build --build-arg user=$user --build-arg userid=$userid --build-arg group=$group --build-arg groupid=$groupid -t ${user}/${repoName}:${imageTag} .
 	docker build -t ${user}/${containerName}:${containerTag} .
 fi
@@ -47,15 +48,13 @@ if [ "$1" = "run" ]; then
 		    DRI_ARGS="$DRI_ARGS --privileged"
 		fi
 
-	docker run --rm --runtime=nvidia -it \
+	#docker run --rm --runtime=nvidia -it
+	docker run --rm -it \
 	    $DRI_ARGS \
 	    --name="${containerName}" \
 	    --hostname="${myhostname}" \
 	    --net=default \
-	    --env="DISPLAY" \
-	    --env="QT_X11_NO_MITSHM=1" \
 	    --workdir="/root" \
-	    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
 	    --volume=`pwd`/input_data:/root/input_data \
 	    --volume=`pwd`/output_data:/root/output_data \
 	    ${user}/${containerName}:${containerTag}

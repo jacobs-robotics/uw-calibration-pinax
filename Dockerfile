@@ -1,4 +1,4 @@
-FROM nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04
+FROM ubuntu:16.04
 
 MAINTAINER Arturo Gomez Chavez "a.gomezchavez@jacobs-university.de"
 
@@ -66,7 +66,7 @@ RUN git clone https://github.com/opencv/opencv_contrib.git
 RUN cd opencv && git checkout 3.4
 RUN cd opencv_contrib && git checkout 3.4
 # clone camodocal
-RUN git clone https://github.com/hengli/camodocal.git
+RUN git clone https://github.com/jacobs-robotics/camodocal.git
 # copy script to install OpenCV and camodocal
 COPY make_opencv_camodocal.sh /root
 RUN chmod a+x $HOME/make_opencv_camodocal.sh 
@@ -81,14 +81,14 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-
 RUN mkdir -p $HOME/pinax/src
 RUN rm /etc/ros/rosdep/sources.list.d/20-default.list
 RUN rosdep init
-RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; cd $HOME/pinax/src; catkin_init_workspace"
+RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash && cd $HOME/pinax/src && catkin_init_workspace"
 
-RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; cd $HOME/pinax; catkin_make"
+RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash && cd $HOME/pinax && catkin_make"
 RUN /bin/bash -c "echo source $HOME/pinax/devel/setup.bash >> $HOME/.bashrc"
 
 # copy and build PinAx code
 COPY src /root/pinax/src
-RUN /bin/bash -c ". $HOME/pinax/devel/setup.bash; cd pinax; catkin_make"
+RUN /bin/bash -c ". $HOME/pinax/devel/setup.bash && cd pinax && catkin_make"
 
 # provide startup command
 COPY src/run_pinax.sh /root/.
