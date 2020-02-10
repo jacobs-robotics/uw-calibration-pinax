@@ -23,7 +23,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-
 
 # install ROS
 RUN /bin/bash -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
-RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y \
 	ros-kinetic-desktop \
 	&& rm -rf /var/lib/apt/lists/*
@@ -63,8 +63,8 @@ RUN cd ceres-bin && make install
 # install OpenCV
 RUN git clone https://github.com/opencv/opencv.git
 RUN git clone https://github.com/opencv/opencv_contrib.git
-RUN cd opencv && git checkout 3.4
-RUN cd opencv_contrib && git checkout 3.4
+RUN cd opencv && git checkout 3.4.7
+RUN cd opencv_contrib && git checkout 3.4.7
 # clone camodocal
 RUN git clone https://github.com/jacobs-robotics/camodocal.git
 # copy script to install OpenCV and camodocal
